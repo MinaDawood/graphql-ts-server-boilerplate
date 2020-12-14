@@ -2,6 +2,7 @@ import * as bcrypt from "bcryptjs";
 import * as yup from "yup";
 import { User } from "../../entity/User";
 import { ResolverMap } from "../../types/graphql-utils";
+import { createConfirmEmailLink } from "../../utils/createConfirmEmailLink";
 import { formatYupError } from "../../utils/formatYupError";
 import {
   badPassword,
@@ -21,7 +22,11 @@ export const resolvers: ResolverMap = {
       `Hello ${name || "World"}`,
   },
   Mutation: {
-    register: async (_, args: GQL.IRegisterOnMutationArguments) => {
+    register: async (
+      _,
+      args: GQL.IRegisterOnMutationArguments,
+      { redis, url }
+    ) => {
       try {
         await schema.validate(args, { abortEarly: false });
       } catch (err) {
@@ -50,6 +55,9 @@ export const resolvers: ResolverMap = {
         password: hashedPassword,
       });
       await user.save();
+
+      const link = await createConfirmEmailLink(url, user.id, redis);
+
       return null;
     },
   },

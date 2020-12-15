@@ -29,7 +29,7 @@ const mutation = (e: string, p: string) => `
 `;
 
 describe("register user", async () => {
-  test("check for duplicate emails", async () => {
+  it("check for duplicate emails", async () => {
     // make sure we can register a user
     const response = await request(getHost(), mutation(email, password));
     expect(response).toEqual({ register: null });
@@ -47,7 +47,7 @@ describe("register user", async () => {
     });
   });
 
-  test("check bad email", async () => {
+  it("check bad email", async () => {
     const response3: any = await request(getHost(), mutation("b", password));
     expect(response3).toEqual({
       register: [
@@ -63,7 +63,7 @@ describe("register user", async () => {
     });
   });
 
-  test("check bad password", async () => {
+  it("check bad password", async () => {
     const response4: any = await request(getHost(), mutation(email, "p"));
     expect(response4).toEqual({
       register: [
@@ -75,7 +75,7 @@ describe("register user", async () => {
     });
   });
 
-  test("check bad email and password", async () => {
+  it("check bad email and password", async () => {
     const response5: any = await request(getHost(), mutation("p", "p"));
     expect(response5).toEqual({
       register: [

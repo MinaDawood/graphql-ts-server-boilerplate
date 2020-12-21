@@ -7,6 +7,7 @@
     "@types/ioredis": "^4.17.8",
     "@types/jest": "^22.2.3",
     "@types/node": "^8.0.29",
+    "@types/node-fetch": "^2.5.7",
     "@types/uuid": "^8.3.0",
     "@types/yup": "^0.29.10",
     "gql2ts": "^1.10.1",
@@ -24,6 +25,7 @@
     "graphql-tools": "^7.0.2",
     "graphql-yoga": "^1.18.3",
     "ioredis": "^4.19.2",
+    "node-fetch": "^2.6.1",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.2.29",
@@ -36,6 +38,9 @@
     "gen-sehema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts"
   },
   "jest": {
+    "globalSetup": "./src/testSetup/callSetup.js",
+    "verbose": true,
+    "testURL": "http://localhost/",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
